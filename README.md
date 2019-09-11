@@ -1,4 +1,4 @@
-# Project Name
+# Housemania
 
 > Project description
 
@@ -36,4 +36,3 @@ From within the root directory:
 npm install -g webpack
 npm install
 ```
-
