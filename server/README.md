@@ -1,5 +1,7 @@
 # API Routes
 
+## Houses
+
 ## GET
 
 ### Starting Route: http://localhost:2020/houses/300
@@ -368,4 +370,287 @@ When location changed:
 
 ```
 House successfully deleted.
+```
+
+## Photos
+
+## GET
+### Starting Route: http://localhost:2020/photos/houses/1
+
+```
+[
+    {
+        "_id": "5d79b44d48e6470522da6158",
+        "photo_id": 4,
+        "house_id": 1,
+        "file_path": "house-photo-4.jpg",
+        "desc": "a sollicitudin orci sem eget massa. Suspendisse eleifend. Cras sed leo. Cras vehicula aliquet libero. Integer in magna. Phasellus dolor elit, pellentesque a, facilisis non, bibendum sed,",
+        "__v": 0
+    },
+    {
+        "_id": "5d79b44d48e6470522da6157",
+        "photo_id": 3,
+        "house_id": 1,
+        "file_path": "house-photo-3.jpg",
+        "desc": "eget, ipsum. Donec sollicitudin adipiscing ligula. Aenean gravida nunc sed pede. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Proin vel arcu eu odio tristique pharetra.",
+        "__v": 0
+    },
+    {
+        "_id": "5d79b44d48e6470522da6156",
+        "photo_id": 2,
+        "house_id": 1,
+        "file_path": "house-photo-2.jpg",
+        "desc": "senectus et netus et malesuada fames ac turpis egestas. Fusce aliquet magna a neque. Nullam ut nisi a odio semper cursus. Integer mollis. Integer",
+        "__v": 0
+    },
+    {
+        "_id": "5d79b44d48e6470522da615b",
+        "photo_id": 7,
+        "house_id": 1,
+        "file_path": "house-photo-7.jpg",
+        "desc": "lobortis ultrices. Vivamus rhoncus. Donec est. Nunc ullamcorper, velit in aliquet lobortis, nisi nibh lacinia orci, consectetuer euismod est arcu ac orci. Ut semper pretium",
+        "__v": 0
+    },
+    {
+        "_id": "5d79b44d48e6470522da615a",
+        "photo_id": 6,
+        "house_id": 1,
+        "file_path": "house-photo-6.jpg",
+        "desc": "dapibus ligula. Aliquam erat volutpat. Nulla dignissim. Maecenas ornare egestas ligula. Nullam feugiat placerat velit. Quisque varius. Nam porttitor",
+        "__v": 0
+    },
+    {
+        "_id": "5d79bd46252488073289351b",
+        "photo_id": 1,
+        "house_id": 1,
+        "file_path": "house-photo-1.jpg",
+        "desc": "turpis nec mauris blandit mattis. Cras eget nisi dictum augue malesuada malesuada.",
+        "__v": 0
+    },
+    {
+        "_id": "5d79bd46252488073289351c",
+        "photo_id": 2,
+        "house_id": 1,
+        "file_path": "house-photo-2.jpg",
+        "desc": "senectus et netus et malesuada fames ac turpis egestas. Fusce aliquet magna a neque. Nullam ut nisi a odio semper cursus. Integer mollis. Integer",
+        "__v": 0
+    },
+    {
+        "_id": "5d79bd46252488073289351d",
+        "photo_id": 3,
+        "house_id": 1,
+        "file_path": "house-photo-3.jpg",
+        "desc": "eget, ipsum. Donec sollicitudin adipiscing ligula. Aenean gravida nunc sed pede. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Proin vel arcu eu odio tristique pharetra.",
+        "__v": 0
+    },
+    {
+        "_id": "5d79bd46252488073289351e",
+        "photo_id": 4,
+        "house_id": 1,
+        "file_path": "house-photo-4.jpg",
+        "desc": "a sollicitudin orci sem eget massa. Suspendisse eleifend. Cras sed leo. Cras vehicula aliquet libero. Integer in magna. Phasellus dolor elit, pellentesque a, facilisis non, bibendum sed,",
+        "__v": 0
+    },
+    {
+        "_id": "5d79bd46252488073289351f",
+        "photo_id": 5,
+        "house_id": 1,
+        "file_path": "house-photo-5.jpg",
+        "desc": "eget, dictum placerat, augue. Sed molestie. Sed id risus quis diam luctus lobortis. Class aptent taciti sociosqu ad litora",
+        "__v": 0
+    },
+    {
+        "_id": "5d79bd462524880732893521",
+        "photo_id": 7,
+        "house_id": 1,
+        "file_path": "house-photo-7.jpg",
+        "desc": "lobortis ultrices. Vivamus rhoncus. Donec est. Nunc ullamcorper, velit in aliquet lobortis, nisi nibh lacinia orci, consectetuer euismod est arcu ac orci. Ut semper pretium",
+        "__v": 0
+    },
+    {
+        "_id": "5d79bd462524880732893520",
+        "photo_id": 6,
+        "house_id": 1,
+        "file_path": "house-photo-6.jpg",
+        "desc": "dapibus ligula. Aliquam erat volutpat. Nulla dignissim. Maecenas ornare egestas ligula. Nullam feugiat placerat velit. Quisque varius. Nam porttitor",
+        "__v": 0
+    },
+    {
+        "_id": "5d79ccd5ff5e3a0a28dc3f4b",
+        "photo_id": 1,
+        "house_id": 1,
+        "file_path": "house-photo-1.jpg",
+        "desc": "turpis nec mauris blandit mattis. Cras eget nisi dictum augue malesuada malesuada.",
+        "__v": 0
+    },
+    {
+        "_id": "5d79ccd5ff5e3a0a28dc3f4c",
+        "photo_id": 2,
+        "house_id": 1,
+        "file_path": "house-photo-2.jpg",
+        "desc": "senectus et netus et malesuada fames ac turpis egestas. Fusce aliquet magna a neque. Nullam ut nisi a odio semper cursus. Integer mollis. Integer",
+        "__v": 0
+    },
+    {
+        "_id": "5d79ccd5ff5e3a0a28dc3f4e",
+        "photo_id": 4,
+        "house_id": 1,
+        "file_path": "house-photo-4.jpg",
+        "desc": "a sollicitudin orci sem eget massa. Suspendisse eleifend. Cras sed leo. Cras vehicula aliquet libero. Integer in magna. Phasellus dolor elit, pellentesque a, facilisis non, bibendum sed,",
+        "__v": 0
+    },
+    {
+        "_id": "5d79ccd5ff5e3a0a28dc3f4d",
+        "photo_id": 3,
+        "house_id": 1,
+        "file_path": "house-photo-3.jpg",
+        "desc": "eget, ipsum. Donec sollicitudin adipiscing ligula. Aenean gravida nunc sed pede. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Proin vel arcu eu odio tristique pharetra.",
+        "__v": 0
+    },
+    {
+        "_id": "5d79ccd5ff5e3a0a28dc3f4f",
+        "photo_id": 5,
+        "house_id": 1,
+        "file_path": "house-photo-5.jpg",
+        "desc": "eget, dictum placerat, augue. Sed molestie. Sed id risus quis diam luctus lobortis. Class aptent taciti sociosqu ad litora",
+        "__v": 0
+    },
+    {
+        "_id": "5d79ccd5ff5e3a0a28dc3f50",
+        "photo_id": 6,
+        "house_id": 1,
+        "file_path": "house-photo-6.jpg",
+        "desc": "dapibus ligula. Aliquam erat volutpat. Nulla dignissim. Maecenas ornare egestas ligula. Nullam feugiat placerat velit. Quisque varius. Nam porttitor",
+        "__v": 0
+    },
+    {
+        "_id": "5d79ccd5ff5e3a0a28dc3f51",
+        "photo_id": 7,
+        "house_id": 1,
+        "file_path": "house-photo-7.jpg",
+        "desc": "lobortis ultrices. Vivamus rhoncus. Donec est. Nunc ullamcorper, velit in aliquet lobortis, nisi nibh lacinia orci, consectetuer euismod est arcu ac orci. Ut semper pretium",
+        "__v": 0
+    },
+    {
+        "_id": "5d7aaef518a10a1fc53328f2",
+        "photo_id": 2,
+        "house_id": 1,
+        "file_path": "house-photo-2.jpg",
+        "desc": "senectus et netus et malesuada fames ac turpis egestas. Fusce aliquet magna a neque. Nullam ut nisi a odio semper cursus. Integer mollis. Integer",
+        "__v": 0
+    },
+    {
+        "_id": "5d7aaef518a10a1fc53328f1",
+        "photo_id": 1,
+        "house_id": 1,
+        "file_path": "house-photo-1.jpg",
+        "desc": "turpis nec mauris blandit mattis. Cras eget nisi dictum augue malesuada malesuada.",
+        "__v": 0
+    },
+    {
+        "_id": "5d7aaef518a10a1fc53328f4",
+        "photo_id": 4,
+        "house_id": 1,
+        "file_path": "house-photo-4.jpg",
+        "desc": "a sollicitudin orci sem eget massa. Suspendisse eleifend. Cras sed leo. Cras vehicula aliquet libero. Integer in magna. Phasellus dolor elit, pellentesque a, facilisis non, bibendum sed,",
+        "__v": 0
+    },
+    {
+        "_id": "5d7aaef518a10a1fc53328f3",
+        "photo_id": 3,
+        "house_id": 1,
+        "file_path": "house-photo-3.jpg",
+        "desc": "eget, ipsum. Donec sollicitudin adipiscing ligula. Aenean gravida nunc sed pede. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Proin vel arcu eu odio tristique pharetra.",
+        "__v": 0
+    },
+    {
+        "_id": "5d7aaef518a10a1fc53328f5",
+        "photo_id": 5,
+        "house_id": 1,
+        "file_path": "house-photo-5.jpg",
+        "desc": "eget, dictum placerat, augue. Sed molestie. Sed id risus quis diam luctus lobortis. Class aptent taciti sociosqu ad litora",
+        "__v": 0
+    },
+    {
+        "_id": "5d7aaef518a10a1fc53328f6",
+        "photo_id": 6,
+        "house_id": 1,
+        "file_path": "house-photo-6.jpg",
+        "desc": "dapibus ligula. Aliquam erat volutpat. Nulla dignissim. Maecenas ornare egestas ligula. Nullam feugiat placerat velit. Quisque varius. Nam porttitor",
+        "__v": 0
+    },
+    {
+        "_id": "5d7aaef518a10a1fc53328f7",
+        "photo_id": 7,
+        "house_id": 1,
+        "file_path": "house-photo-7.jpg",
+        "desc": "lobortis ultrices. Vivamus rhoncus. Donec est. Nunc ullamcorper, velit in aliquet lobortis, nisi nibh lacinia orci, consectetuer euismod est arcu ac orci. Ut semper pretium",
+        "__v": 0
+    },
+    {
+        "_id": "5d7b0275a9fe81605742a6f1",
+        "photo_id": 1,
+        "house_id": 1,
+        "file_path": "house-photo-1.jpg",
+        "desc": "turpis nec mauris blandit mattis. Cras eget nisi dictum augue malesuada malesuada.",
+        "__v": 0
+    },
+    {
+        "_id": "5d7b041000660960a762774f",
+        "photo_id": 1,
+        "house_id": 1,
+        "file_path": "house-photo-1.jpg",
+        "desc": "turpis nec mauris blandit mattis. Cras eget nisi dictum augue malesuada malesuada.",
+        "__v": 0
+    },
+    {
+        "_id": "5d7b042e00660960a7627750",
+        "photo_id": 1,
+        "house_id": 1,
+        "file_path": "house-photo-1.jpg",
+        "desc": "turpis nec mauris blandit mattis. Cras eget nisi dictum augue malesuada malesuada.",
+        "__v": 0
+    },
+    {
+        "_id": "5d7b046b00660960a7627751",
+        "photo_id": 1,
+        "house_id": 1,
+        "file_path": "house-photo-1.jpg",
+        "desc": "turpis nec mauris blandit mattis. Cras eget nisi dictum augue malesuada malesuada.",
+        "__v": 0
+    }
+ ```
+
+## POST
+### Starting Route: http://localhost:2020/photos/houses/1
+
+Example output (gets added to array from above):
+```
+{
+    "_id": "5d7b04f000660960a7627752",
+    "photo_id": 1,
+    "house_id": 1,
+    "file_path": "house-photo-1.jpg",
+    "desc": "turpis nec mauris blandit mattis. Cras eget nisi dictum augue malesuada malesuada.",
+    "__v": 0
+}
+```
+
+## PUT
+### Starting Route: http://localhost:2020/photos/houses/1
+
+Updates the description for the first photo within a given house Id:
+
+```
+{
+    "desc": "New description"
+}
+```
+
+## DELETE 
+### Starting Route: http://localhost:2020/photoshouses/1
+
+Deletes photo from array of photo objects.
+```
+Photo successfully deleted. 
 ```
