@@ -2,10 +2,12 @@ const express = require('express');
 require('dotenv').config();
 var cors = require('./cors');
 const bodyParser = require('body-parser')
-const testHouse = require('./../database/test-data.js')
 
 const House = require('./../database/House.js');
+const Houses = require('./../database/houses-data.json');
 const Photo = require('./../database/Photo.js');
+const Photos = require('./../database/photos-data.json');
+
 
 const app = express();
 
@@ -38,8 +40,8 @@ app.post('/houses/:id', (req, res, next) => {
   const houseId = req.params.id
   House.findOne({ house_id: houseId }, (err, results) => {
     if (err || !results) {
-      console.log('what i want to put in', testHouse.testHouse[0])
-      House.create(testHouse.testHouse[0], (err, house) => {
+      console.log('what i want to put in', Houses[0])
+      House.create(Houses[0], (err, house) => {
         console.log('house in house create', house)
         if (err) {
           res.end('Error creating house.');
@@ -60,7 +62,7 @@ app.put('/houses/:id', (req, res, next) => {
         if (err) {
           res.send('Error updating house.');
         } else {
-          res.status(200).json(house);
+          res.send(location);
         }
       })
 });
@@ -76,7 +78,7 @@ app.delete('/houses/:id', (req, res, next) => {
   });
 });
 
-app.get('/photos/houses/:id', (req, res, next) => {
+app.get('/photos/house/:id', (req, res, next) => {
   var houseId = req.params.id;
 
   Photo.find({ house_id: houseId }, (err, photos) => {
@@ -85,6 +87,45 @@ app.get('/photos/houses/:id', (req, res, next) => {
       res.status(400).json({ success: false, message: 'Could not fetch house photos from our Database' });
     } else {
       res.status(200).json(photos);
+    }
+  });
+});
+
+
+app.post('/photos/houses/:id', (req, res, next) => {
+  const houseId = req.params.id
+  Photo.find({ house_id: houseId }, (err, results) => {
+      console.log('what i want to put in', Photos[0])
+      Photo.create(Photos[0], (err, photo) => {
+        console.log('photo in photo create', photo)
+        if (err) {
+          res.end('Error creating photo.');
+        } else {
+          res.status(200).json(photo);
+        }
+      })
+    })
+});
+
+app.put('/photos/houses/:id', (req, res, next) => {
+  const houseId = req.params.id
+  var description = {desc: 'New description'}
+      Photo.findOneAndUpdate({ house_id: houseId }, description, (err) => {
+        if (err) {
+          res.send('Error updating house.');
+        } else {
+          res.send(description);
+        }
+    })
+});
+
+app.delete('/photos/houses/:id', (req, res, next) => {
+  const houseId = req.params.id
+  Photo.deleteOne({ house_id: houseId }, (err, result) => {
+    if (err || !result) {
+      res.status(404).send('No photo found to delete.')
+    } else {
+      res.send('Photo successfully deleted.')
     }
   });
 });
