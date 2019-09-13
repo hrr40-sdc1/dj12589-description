@@ -648,7 +648,7 @@ Updates the description for the first photo within a given house Id:
 ```
 
 ## DELETE 
-### Starting Route: http://localhost:2020/photoshouses/1
+### Starting Route: http://localhost:2020/photos/houses/1
 
 Deletes photo from array of photo objects.
 ```
