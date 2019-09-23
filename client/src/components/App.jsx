@@ -56,11 +56,13 @@ const OverviewContainer = styled.div`
 
 class App extends React.Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       house: {},
+      bedrooms: {},
+      photos: {},
       floatTopBar: false
     };
 
@@ -70,16 +72,25 @@ class App extends React.Component {
 
 
   componentDidMount() {
-    this.loadHouse(1, (house) => {
-      //console.log('house', house);
+    const urlParams = new URLSearchParams(window.location.search);
+    const houseId = urlParams.get('houseId') || 1;
+    this.loadHouse(houseId, (house) => {
       this.setState({
         house
       });
     });
-
+    this.loadBedrooms(houseId, (bedrooms) => {
+        this.setState({
+          bedrooms
+      });
+    });
+    this.loadPhotos(houseId, (photos) => {
+      this.setState({
+        photos
+      });
+    });
     //const list = ReactDOM.findDOMNode(this.refs.list);
     //list.addEventListener('scroll', this.handleScroll);
-
     $(window).on('scroll', this.handleScroll.bind(this, window));
   }
 
@@ -91,7 +102,6 @@ class App extends React.Component {
 
   loadHouse(id, callback) {
     var host = this.host;
-
     $.ajax({
       method: 'GET',
       url: host + '/houses/' + id,
@@ -104,9 +114,36 @@ class App extends React.Component {
     });
   }
 
+  loadPhotos(id, callback) {
+    var host = this.host;
+    $.ajax({
+      method: 'GET',
+      url: host + '/photos/houses/' + id,
+      contentType: 'application/json',
+      cache: false,
+      success: callback,
+      error: (err) => {
+        console.log('error fetching the photos', err);
+      }
+    });
+  }
+
+  loadBedrooms(id, callback) {
+    var host = this.host;
+    $.ajax({
+      method: 'GET',
+      url: host + '/bedrooms/houses/' + id,
+      contentType: 'application/json',
+      cache: false,
+      success: callback,
+      error: (err) => {
+        console.log('error fetching the bedrooms', err);
+      }
+    });
+  }
+
   handleScroll(window) {
     var currentScroll = $(window).scrollTop();
-    //console.log('window scrolled', currentScroll);
     if (currentScroll >= 373) {
       // update state to display floating top bar
       if (!this.state.floatTopBar) {
@@ -134,13 +171,13 @@ class App extends React.Component {
             <Search />
             <Menu />
           </TopBar>
-          <Banner photos={this.state.house.photos} />
+          <Banner photos={this.state.photos} />
         </header>
         <HouseDetailsContent id="overview-details-content">
           <OverviewContainer id="overview-container">
-            <Description house={this.state.house} />
-            <Amenities amenities={this.state.house.amenities} />
-            <SleepingArrangement private_room={this.state.house.private_room} />
+            <Description house={this.state.house} bedrooms={this.state.bedrooms}/>
+            <Amenities amenityList={this.state.house} />
+            <SleepingArrangement bedrooms={this.state.bedrooms} house={this.state.house}/>
             <Availability availability={this.state.house.availability} />
           </OverviewContainer>
         </HouseDetailsContent>

@@ -46,7 +46,7 @@ const Button = styled.button`
 `;
 
 
-const Amenities = (props) => {
+const Amenities = ({amenityList}) => {
 
   const getItemIcon = (item) => {
     if (item === 'Wifi') {
@@ -65,20 +65,27 @@ const Amenities = (props) => {
 
   const listAmenities = () => {
 
-    if (!props.amenities) {
+    if (!amenityList.amenity1 && !amenityList.amenity2 && !amenityList.amenity3 && !amenityList.amenity4) {
       return;
     }
-
+    let amenityOptions = ['Hangers', 'Wifi', 'Kitchen', 'Free parking on Premises', 'Pool', 'Gym', 'Tennis Courts', 'Spa', 'Housekeeping', 'Restaurant']
     // display only 4 at maximum
-    let amenities = props.amenities.slice(0, 4);
 
-    return amenities.map((amenity, ind) => {
+    function unique(value, index, self) {
+      return self.indexOf(value) === index;
+    }
+
+  // usage example:
+    let amenities = [amenityList.amenity1, amenityList.amenity2, amenityList.amenity3, amenityList.amenity4].filter(unique)
+
+    console.log('AMENITIES!', amenities)
+    return amenities.map((amenityNum, ind) => {
       return (
-        <Item key={amenity.item + '-summary-' + ind}>
+        <Item key={amenityOptions[amenityNum + 1] + '-summary-' + ind}>
           <Icon viewBox="0 0 24 24" role="presentation" aria-hidden="true" focusable="false" >
-            {getItemIcon(amenity.item)}
+            {getItemIcon(amenityOptions[amenityNum -1])}
           </Icon>
-          {amenity.item}
+          {amenityOptions[amenityNum - 1]}
         </Item>
       );
     });
@@ -91,7 +98,7 @@ const Amenities = (props) => {
         {listAmenities()}
       </List>
       <div>
-        <Button>{props.amenities ? 'Show all ' + props.amenities.length + ' amenities' : 'No Amenity'}</Button>
+        <Button>{amenityList ? 'Show all amenities' : 'No Amenity'}</Button>
       </div>
     </OverviewPart>
   );

@@ -1,13 +1,19 @@
+require('newrelic');
 const express = require('express');
 require('dotenv').config();
 var cors = require('./cors');
+// var cors = require('cors');
 const bodyParser = require('body-parser')
 
-const House = require('./../database/House.js');
-const Houses = require('./../database/houses-data.json');
-const Photo = require('./../database/Photo.js');
-const Photos = require('./../database/photos-data.json');
+const { Pool, Client } = require('pg')
 
+const pool = new Pool({
+  user: process.env.USER,
+  host: process.env.HOST,
+  database: 'description',
+  password: null,
+  port: process.env.PGPORT,
+})
 
 const app = express();
 
@@ -17,42 +23,42 @@ app.use(express.json());
 app.use(express.static(__dirname + '/../client/dist'));
 // serve static image files in public if necessary
 app.use(express.static(__dirname + '/../public'));
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-
 // API Endpoints
 app.get('/houses/:id', (req, res, next) => {
-  var houseId = req.params.id;
+  var houseId = Number(req.params.id);
 
-  House.findOne({ house_id: houseId }, (err, house) => {
-    if (err || !house) {
-      console.log('error fetching this house', err);
-      res.status(400).json({ success: false, message: 'Could not fetch this House from our Database' });
+  pool.query(`SELECT * FROM houses WHERE house_id = ${houseId};`, (err, results) => {
+    if (err) {
+      // console.log('Error getting house.', err)
+      res.status(404).send({success: false, message: 'Could not fetch this house from our database.'});
     } else {
-      res.status(200).json(house);
+      // console.log('House results', results.rows[0])
+      res.status(200).send(results.rows[0]);
     }
-  });
+  })
 });
 
 app.post('/houses/:id', (req, res, next) => {
-  const houseId = req.params.id
-  House.findOne({ house_id: houseId }, (err, results) => {
-    if (err || !results) {
-      console.log('what i want to put in', Houses[0])
-      House.create(Houses[0], (err, house) => {
-        console.log('house in house create', house)
-        if (err) {
-          res.end('Error creating house.');
-        } else {
-          res.status(200).json(house);
-        }
-      })
+  const houseId = Number(req.params.id)
+  const isEntirePlace = true
+  //character constants need to be wrapped in single quotes
+  const location = 'testlocation'
+
+  pool.query(`INSERT INTO houses (house_id, location, isentireplace) VALUES (${houseId},'${location}',${isEntirePlace});`, (err, results) => {
+    if (err) {
+      // console.log('Error posting house.', err)
+      res.status(404).send(err);
     } else {
-      res.end('House already exists.');
+      res.status(200).send(`{
+        houseId: ${houseId},
+        location: '${location}',
+        isEntirePlace: ${isEntirePlace}
+      }`);
     }
-  });
+  })
 });
 
 app.put('/houses/:id', (req, res, next) => {
@@ -78,33 +84,38 @@ app.delete('/houses/:id', (req, res, next) => {
   });
 });
 
-app.get('/photos/house/:id', (req, res, next) => {
-  var houseId = req.params.id;
+app.get('/photos/houses/:id', (req, res, next) => {
 
-  Photo.find({ house_id: houseId }, (err, photos) => {
+  var houseId = Number(req.params.id);
+
+  pool.query(`SELECT * FROM photos WHERE house_id = ${houseId};`, (err, results) => {
     if (err) {
-      console.log('error fetching this house photos', err);
-      res.status(400).json({ success: false, message: 'Could not fetch house photos from our Database' });
+      // console.log('Error getting house.', err)
+      res.status(404).send({success: false, message: 'Could not fetch photos for house from our database.'});
     } else {
-      res.status(200).json(photos);
+      // console.log('House results', results.rows)
+      res.status(200).send(results.rows);
     }
-  });
+  })
 });
 
-
 app.post('/photos/houses/:id', (req, res, next) => {
-  const houseId = req.params.id
-  Photo.find({ house_id: houseId }, (err, results) => {
-      console.log('what i want to put in', Photos[0])
-      Photo.create(Photos[0], (err, photo) => {
-        console.log('photo in photo create', photo)
-        if (err) {
-          res.end('Error creating photo.');
-        } else {
-          res.status(200).json(photo);
-        }
-      })
-    })
+  const houseId = Number(req.params.id)
+  const photoId = 40000010;
+  const photoUrl = 780
+
+  pool.query(`INSERT INTO photos (house_id, photo_id, photoUrl) VALUES (${houseId}, ${photoId}, ${photoUrl});`, (err, results) => {
+    if (err) {
+      // console.log('Error posting photos.', err)
+      res.status(404).send(err);
+    } else {
+      res.status(200).send(`{
+        houseId: ${houseId},
+        photo_id: '${photoId}',
+        photoUrl: ${photoUrl}
+      }`);
+    }
+  });
 });
 
 app.put('/photos/houses/:id', (req, res, next) => {
@@ -129,6 +140,45 @@ app.delete('/photos/houses/:id', (req, res, next) => {
     }
   });
 });
+
+app.get('/bedrooms/houses/:id', (req, res, next) => {
+
+  var houseId = Number(req.params.id);
+
+  pool.query(`SELECT * FROM bedroomsTwo WHERE house_id = ${houseId} LIMIT 5;`, (err, results) => {
+    if (err) {
+      console.log('Error getting house.', err)
+      res.status(404).send({success: false, message: 'Could not fetch photos for house from our database.'});
+    } else {
+      console.log('House results', results.rows)
+      res.status(200).send(results.rows);
+    }
+  })
+});
+
+app.post('/bedrooms/houses/:id', (req, res, next) => {
+  const houseId = Number(req.params.id)
+  const numberOfGuests = 2
+  const bathroom = 5
+  const bedsize = 1
+  const bed2size = 0
+
+  pool.query(`INSERT INTO bedrooms (house_id, numberOfGuests, bathroom, bedsize, bed2size) VALUES (${houseId}, ${numberOfGuests}, ${bathroom}, ${bedsize}, ${bed2size});`, (err, results) => {
+    if (err) {
+      console.log('Error posting bedrooms.', err)
+      res.status(404).send(err);
+    } else {
+      res.status(200).send(`{
+        houseId: ${houseId},
+        numberOfGuests: ${numberOfGuests},
+        bathroom: ${bathroom},
+        bedsize: ${bedsize},
+        bed2size: ${bed2size}
+      }`);
+    }
+  });
+});
+
 
 app.get('/houses/search/:qry', (req, res, next) => {
   var qry = req.params.qry;
