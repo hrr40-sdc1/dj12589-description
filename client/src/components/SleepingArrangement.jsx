@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import sc from './styled/OverviewPart.jsx';
 import Bed from './icons/Bed.jsx';
+import { log } from 'util';
 
 
 const OverviewPart = sc.OverviewPart;
@@ -47,25 +48,7 @@ const NormalIcon = styled.svg`
   fill: currentcolor;
 `;
 
-const SleepingArragement = (props) => {
-
-  const getBeds = (bedroom) => {
-    if (!props.private_room) {
-      return;
-    }
-
-    let beds = {
-      normal: 0,
-      queen: 0,
-      king: 0
-    };
-
-    bedroom.beds.forEach((bed) => {
-      beds[bed.size]++;
-    });
-
-    return beds;
-  };
+const SleepingArrangement = ({ bedrooms }) => {
 
   const listBedIcons = (beds) => {
     let icons = [];
@@ -95,35 +78,43 @@ const SleepingArragement = (props) => {
         </NormalIcon>
       );
     }
-
-
     return icons;
   };
 
-  const listBedrooms = (beds) => {
+  const listBedrooms = () => {
+    var toReturn = [];
 
-    if (!props.private_room) {
-      return;
+    for (var i = 0; i < bedrooms.length; i++) {
+      let beds = {
+        normal: 0,
+        queen: 0,
+        king: 0
+      };
+
+      if (bedrooms[i].bedsize === 1 || bedrooms[i].bed2size === 1) {
+        beds.normal++
+      }
+      if (bedrooms[i].bedsize === 2 || bedrooms[i].bed2size === 2) {
+        beds.queen++
+      }
+      if (bedrooms[i].bedsize === 3 || bedrooms[i].bed2size === 3) {
+        beds.king++
+      }
+      toReturn.push(
+        <Bedroom key={'sleeping-arrangement-' + i}>
+        <div>{listBedIcons(beds)}</div>
+        <BedroomNumber>{'bedroom' + (i + 1)}</BedroomNumber>
+        <div>{beds.king > 0 ? beds.king + ' king beds' : '' }</div>
+        <div>{beds.queen > 0 ? beds.queen + ' queen beds' : '' }</div>
+        <div>{beds.normal > 0 ? beds.normal + ' normal beds' : '' }</div>
+      </Bedroom>
+      )
     }
 
-    // display only 4 at maximum
-    let bedrooms = props.private_room.bedrooms.slice();
-
-    return bedrooms.map((bedroom, ind) => {
-      let beds = getBeds(bedroom);
-
-      return (
-        <Bedroom key={'sleeping-arrangement-' + ind}>
-          <div>{listBedIcons(beds)}</div>
-          <BedroomNumber>{'bedroom' + (ind + 1)}</BedroomNumber>
-          <div>{beds.king > 0 ? beds.king + ' king beds' : '' }</div>
-          <div>{beds.queen > 0 ? beds.queen + ' queen beds' : '' }</div>
-          <div>{beds.normal > 0 ? beds.normal + ' normal beds' : '' }</div>
-        </Bedroom>
-      );
-    });
+    return toReturn.map(ele => {
+      return ele
+    })
   };
-
 
   return (
     <OverviewPart>
@@ -133,4 +124,4 @@ const SleepingArragement = (props) => {
   );
 };
 
-export default SleepingArragement;
+export default SleepingArrangement;

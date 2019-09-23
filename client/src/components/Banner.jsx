@@ -101,48 +101,42 @@ const CommandItem = styled.div`
   box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.14);
 `;
 
-
-
 const Banner = (props) => {
 
   let photos = [];
-
   // Sort photos
-  if (props.photos) {
-    photos = props.photos.sort(function(p1, p2) {
-      return p1.photo_id - p2.photo_id;
-    });
-  }
+  // if (props.photos) {
+  //   photos = props.photos.sort(function(p1, p2) {
+  //     return p1.photo_id - p2.photo_id;
+  //   });
+  // }
 
   // Amazon S3 is by default. Set to local if in Env settings
   let s3 = process.env.S3_HOST || 'https://housemania-hr.s3-us-west-1.amazonaws.com';
 
-  let photo1 = 'default.jpg';
-  let photo2 = 'default.jpg';
-  let photo3 = 'default.jpg';
-  let photo4 = 'default.jpg';
-  let photo5 = 'default.jpg';
+  console.log('props.photos', props.photos)
 
-  const loadPhotos = () => {
-    if (!photos.length) {
-      return;
+  let photoBucket = process.env.PHOTOBUCKET
+
+  let photo1 = null;
+  let photo2 = null;
+  let photo3 = null;
+  let photo4 = null;
+  let photo5 = null;
+
+  for (var i = 0; i < props.photos.length; i++) {
+    if (!photo1) {
+      photo1 = `${props.photos[i].photourl}.jpg`
+    } else if (!photo2) {
+      photo2 = `${props.photos[i].photourl}.jpg`
+    } else if (!photo3) {
+      photo3 = `${props.photos[i].photourl}.jpg`
+    } else if (!photo4) {
+      photo4 = `${props.photos[i].photourl}.jpg`
+    } else if (!photo5) {
+      photo5 = `${props.photos[i].photourl}.jpg`
     }
-    if (photos[0]) {
-      photo1 = photos[0].file_path;
-    }
-    if (photos[1]) {
-      photo2 = photos[1].file_path;
-    }
-    if (photos[2]) {
-      photo3 = photos[2].file_path;
-    }
-    if (photos[3]) {
-      photo4 = photos[3].file_path;
-    }
-    if (photos[4]) {
-      photo5 = photos[4].file_path;
-    }
-  };
+  }
 
   const zoomPhoto = (event) => {
     let $photo = $(event.target);
@@ -187,38 +181,38 @@ const Banner = (props) => {
   };
 
   // Load Photos automatically if they are ready in props
-  loadPhotos();
+  // loadPhotos();
 
   return (
     <BannerContainer id="overview-house-banner" >
       <PhotosContainer className="photos-container" >
         <PrimaryPhotoContainer >
-          <PrimaryPhoto src={s3 + '/photos/house/' + photo1} data-id={1}
+          <PrimaryPhoto src={photoBucket+ '/' + photo1} data-id={1}
             onMouseOver={zoomPhoto.bind(this)}
             onMouseOut={unzoomPhoto.bind(this)} ></PrimaryPhoto>
           <PhotoShadow className="photo-shadow" data-id={1} />
         </PrimaryPhotoContainer>
 
         <SecondaryPhotoContainer>
-          <SecondaryPhoto src={s3 + '/photos/house/' + photo2} data-id={2}
+          <SecondaryPhoto src={photoBucket + '/' + photo2} data-id={2}
             onMouseOver={zoomPhoto.bind(this)}
             onMouseOut={unzoomPhoto.bind(this)} ></SecondaryPhoto>
           <PhotoShadow className="photo-shadow" data-id={2} />
         </SecondaryPhotoContainer>
         <SecondaryPhotoContainer>
-          <SecondaryPhoto src={s3 + '/photos/house/' + photo3} data-id={3}
+          <SecondaryPhoto src={photoBucket + '/' + photo3} data-id={3}
             onMouseOver={zoomPhoto.bind(this)}
             onMouseOut={unzoomPhoto.bind(this)} ></SecondaryPhoto>
           <PhotoShadow className="photo-shadow" data-id={3} />
         </SecondaryPhotoContainer>
         <SecondaryPhotoContainer>
-          <SecondaryPhoto src={s3 + '/photos/house/' + photo4} data-id={4}
+          <SecondaryPhoto src={photoBucket + '/' + photo4} data-id={4}
             onMouseOver={zoomPhoto.bind(this)}
             onMouseOut={unzoomPhoto.bind(this)} ></SecondaryPhoto>
           <PhotoShadow className="photo-shadow" data-id={4} />
         </SecondaryPhotoContainer>
         <SecondaryPhotoContainer>
-          <SecondaryPhoto src={s3 + '/photos/house/' + photo5} data-id={5}
+          <SecondaryPhoto src={photoBucket + '/' + photo5} data-id={5}
             onMouseOver={zoomPhoto.bind(this)}
             onMouseOut={unzoomPhoto.bind(this)} ></SecondaryPhoto>
           <PhotoShadow className="photo-shadow" data-id={5} />

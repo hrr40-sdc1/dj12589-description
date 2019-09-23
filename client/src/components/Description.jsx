@@ -105,10 +105,7 @@ const ReadMore = styled.button`
   }
 `;
 
-
-
-
-const Description = ({ house = {}}) => {
+const Description = ({ house, bedrooms = {}}) => {
 
   // Amazon S3 is by default. Set to local if in Env settings
   let s3 = process.env.S3_HOST || 'https://housemania-hr.s3-us-west-1.amazonaws.com';
@@ -119,6 +116,17 @@ const Description = ({ house = {}}) => {
     bed: 0,
     bath: 0
   };
+
+  for (var i = 0; i < bedrooms.length; i++) {
+    room.bedroom++;
+    room.guest += bedrooms[i].numberofguests;
+    room.bath += bedrooms[i].bathroom;
+    room.bed++;
+    if (bedrooms[i].bed2size !== 0) {
+      room.bed++;
+    }
+  }
+
 
   const loadRoomUnitInfo = () => {
     let units = house.private_room;
@@ -134,8 +142,6 @@ const Description = ({ house = {}}) => {
         }, 0);
       }
     }
-
-    //console.log('loaded room', room);
   };
 
   loadRoomUnitInfo();
@@ -166,8 +172,8 @@ const Description = ({ house = {}}) => {
       </TitleContainer>
 
       <HostContainer className="host-photo">
-        <HostPhoto src={s3 + '/photos/host/' + (house.super_host_photo || '/default.jpg')} />
-        <div>{house.super_host_name}</div>
+        <HostPhoto src={house.host_photo} />
+        <div>{house.host_name}</div>
         <HostBadge>
           <Badge />
         </HostBadge>
@@ -194,7 +200,7 @@ const Description = ({ house = {}}) => {
           </ItemIconContainer>
           <ItemDetails>
             <PartHeader>Great check-in experience</PartHeader>
-            {house.rating}% of recent guests gave the check-in process a 5-star rating.
+            {house.rating * 20}% of recent guests gave the check-in process a 5-star rating.
           </ItemDetails>
         </SummaryItem>
 
@@ -203,7 +209,7 @@ const Description = ({ house = {}}) => {
             <ItemIcon src={s3 + '/icons/medal-black-icon.png'} />
           </ItemIconContainer>
           <ItemDetails>
-            <PartHeader>{house.super_host_name} is a Superhost</PartHeader>
+            <PartHeader>{house.host_name} is a Superhost</PartHeader>
             Superhosts are experienced, highly rated hosts who are committed to providing great stays for guests.
           </ItemDetails>
         </SummaryItem>
@@ -211,21 +217,21 @@ const Description = ({ house = {}}) => {
       </Summary>
 
       <DescriptionContainer>
-        {house.desc}
+        {house.description}
       </DescriptionContainer>
       <div >
         <ReadMoreContainer id="read-more-container" >
           <DescriptionContainer>
             <PartHeader>The Space</PartHeader>
-            {house.space_desc}
+            {house.space_description}
           </DescriptionContainer>
           <DescriptionContainer>
             <PartHeader>Guest Access</PartHeader>
-            {house.guest_desc}
+            {house.guest_description}
           </DescriptionContainer>
           <DescriptionContainer>
             <PartHeader>Other things to note</PartHeader>
-            {house.other_desc}
+            {house.other_description}
           </DescriptionContainer>
         </ReadMoreContainer>
         <ReadMore onClick={handleReadMoreClick} >Read more about the space ⌄</ReadMore>

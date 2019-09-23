@@ -37,3 +37,9 @@ __snapshots__
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
+
+# Other files
+database/json-gen-script.js
+newrelic.js
+get.yml
+post.yml
