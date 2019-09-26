@@ -65,15 +65,15 @@ class App extends React.Component {
       photos: {},
       floatTopBar: false
     };
-
     // Amazon Server HOST will be by default. Set to local if in Env settings
-    this.host = process.env.HOUSEMANIA_HOST || 'http://housemania-overview.us-west-1.elasticbeanstalk.com';
+    // this.host = process.env.HOUSEMANIA_HOST;
+    // this.host = process.env.HOUSEMANIA_HOST || 'http://housemania-overview.us-west-1.elasticbeanstalk.com';
   }
 
 
   componentDidMount() {
     const urlParams = new URLSearchParams(window.location.search);
-    const houseId = urlParams.get('houseId') || 1;
+    const houseId = urlParams.get('houseId') || 100;
     this.loadHouse(houseId, (house) => {
       this.setState({
         house
@@ -104,7 +104,7 @@ class App extends React.Component {
     var host = this.host;
     $.ajax({
       method: 'GET',
-      url: host + '/houses/' + id,
+      url: '/api/houses/' + id,
       contentType: 'application/json',
       cache: false,
       success: callback,
@@ -118,7 +118,7 @@ class App extends React.Component {
     var host = this.host;
     $.ajax({
       method: 'GET',
-      url: host + '/photos/houses/' + id,
+      url: '/api/photos/houses/' + id,
       contentType: 'application/json',
       cache: false,
       success: callback,
@@ -132,7 +132,7 @@ class App extends React.Component {
     var host = this.host;
     $.ajax({
       method: 'GET',
-      url: host + '/bedrooms/houses/' + id,
+      url: '/api/bedrooms/houses/' + id,
       contentType: 'application/json',
       cache: false,
       success: callback,
