@@ -116,7 +116,7 @@ const Banner = (props) => {
 
   console.log('props.photos', props.photos)
 
-  let photoBucket = process.env.PHOTOBUCKET
+  let photoBucket = 'http://d1mw17xnjm68ku.cloudfront.net';
 
   let photo1 = null;
   let photo2 = null;
